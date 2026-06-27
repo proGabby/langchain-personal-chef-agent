@@ -6,6 +6,17 @@ Developed by **Inimfon Willie**, inspired by the *Foundation: Introduction to La
 
 ---
 
+## Demo Screenshots
+
+Here is the Personal Chef Assistant running locally in the browser:
+
+| Initial Greeting & Preferences Setup | Recipe Search & Interactive Chat |
+| --- | --- |
+| ![Initial Greeting](assets/screenshot1.png) | ![Recipe Search](assets/screenshot2.png) |
+
+---
+
+
 ## Features
 
 - **Leftover Ingredient Matcher**: Recommends practical recipes based on whatever leftover ingredients you currently have.
