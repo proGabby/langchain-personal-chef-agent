@@ -43,4 +43,50 @@ agent = create_agent(
     system_prompt=system_prompt
 )
 
+# Interactive chat loop to converse with the chef
+print("\n=== Personal Chef Assistant is ready! ===")
+print("Type your leftover ingredients to get recipes, and ask follow-up questions.")
+print("Type 'exit' or 'quit' to end the session.\n")
 
+messages = []
+
+while True:
+    try:
+        user_input = input("You: ")
+        if user_input.strip().lower() in ["exit", "quit"]:
+            print("Chef: Happy cooking! Goodbye!")
+            break
+            
+        if not user_input.strip():
+            continue
+            
+        # Add the human message to the history
+        messages.append(HumanMessage(content=user_input))
+        
+        # Run the agent
+        response = agent.invoke({"messages": messages})
+        
+        # Extract the agent's response message
+        agent_message = response["messages"][-1]
+        
+        # Save it to the conversation history
+        messages.append(agent_message)
+        
+        # Extract the text cleanly
+        content = agent_message.content
+        text_response = ""
+        if isinstance(content, str):
+            text_response = content
+        elif isinstance(content, list):
+            text_response = "".join(
+                block.get("text", "") for block in content 
+                if isinstance(block, dict) and block.get("type") == "text"
+            )
+            
+        print(f"\nChef:\n{text_response}\n")
+        
+    except KeyboardInterrupt:
+        print("\nChef: Happy cooking! Goodbye!")
+        break
+    except Exception as e:
+        print(f"\nAn error occurred: {e}\n")
