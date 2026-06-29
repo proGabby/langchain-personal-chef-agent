@@ -20,7 +20,7 @@ if "messages" not in st.session_state:
         }
     ]
     
-    # Generate a unique thread ID for the agent memory session
+    # thread id for the memory session
     st.session_state.thread_id = "chef-streamlit-thread-1"
 
 
@@ -50,7 +50,7 @@ if user_input := st.chat_input("What ingredients do you have?"):
             except Exception as e:
                 st.error(f"An error occurred: {e}")
 
-# Fixed Footer below the chatbox
+# Footer section
 st.markdown(
     """
     <style>
