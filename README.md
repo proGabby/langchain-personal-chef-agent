@@ -8,11 +8,15 @@ Developed by **Inimfon Willie**, inspired by the *Foundation: Introduction to La
 
 ## Demo Screenshots
 
-Here is the Personal Chef Assistant running locally in the browser:
+Here is the Personal Chef Assistant running locally in the browser and visualized in LangGraph Studio:
 
 | Initial Greeting & Preferences Setup | Recipe Search & Interactive Chat |
 | --- | --- |
 | ![Initial Greeting](assets/screenshot1.png) | ![Recipe Search](assets/screenshot2.png) |
+
+### LangGraph Studio Visualization
+
+![LangGraph Studio](assets/langgraph_studio.png)
 
 ---
 
@@ -33,9 +37,11 @@ Here is the Personal Chef Assistant running locally in the browser:
 │   └── app.py            # Streamlit Chat interface
 ├── notebook/
 │   └── chef_service.py   # LangChain agent logic & search tools
-├── .env                  # API Credentials (ignored by git)
+├── .env                  # API Credentials & tracing config (ignored by git)
+├── langgraph.json        # LangGraph CLI config for local development
 ├── pyproject.toml        # Project dependencies managed by uv
 └── README.md
+
 ```
 
 ---
@@ -56,6 +62,11 @@ Create a `.env` file in the root directory and add your API keys:
 ```env
 GEMINI_API_KEY="your_gemini_api_key"
 TAVILY_API_KEY="your_tavily_api_key"
+
+# LangSmith Tracing config
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY="your_langsmith_api_key"
+LANGCHAIN_PROJECT="personal_chef"
 ```
 
 ### 3. Run the Streamlit Interface:
@@ -63,5 +74,12 @@ TAVILY_API_KEY="your_tavily_api_key"
 ```bash
 uv run streamlit run UI/app.py
 ```
-
 Open `http://localhost:8501` in your browser to start chatting with your Personal Chef!
+
+### 4. Run LangGraph Studio Locally (Optional for Tracing & Debugging):
+To visualize your agent graph and debug runs locally, start the LangGraph local API dev server:
+```bash
+uv run langgraph dev
+```
+*(If you get a connection block in Safari, consider running the command with the `--tunnel` flag or opening the URL in Chrome: `uv run langgraph dev --tunnel`)*
+
