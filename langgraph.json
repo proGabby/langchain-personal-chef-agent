@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "."
+    ],
+    "graphs": {
+        "agent": "notebook/chef_service.py:agent"
+    },
+    "env": "./.env"
+}

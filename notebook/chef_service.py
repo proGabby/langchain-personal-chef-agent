@@ -37,16 +37,27 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.7
 )
 
-# Initialize the memory saver checkpointer
-memory = MemorySaver()
+# Create the agent using the Gemini model object
+# Avoid passing a custom checkpointer if imported by LangGraph API/Studio, which manages checkpointers automatically.
+import sys
+is_langgraph_api = any(mod.startswith("langgraph_api") for mod in sys.modules)
 
-# Create the agent using the Gemini model object and checkpointer memory
-agent = create_agent(
-    model=llm,
-    tools=[web_search],
-    system_prompt=system_prompt,
-    checkpointer=memory
-)
+if is_langgraph_api:
+    agent = create_agent(
+        model=llm,
+        tools=[web_search],
+        system_prompt=system_prompt
+    )
+else:
+    memory = MemorySaver()
+    agent = create_agent(
+        model=llm,
+        tools=[web_search],
+        system_prompt=system_prompt,
+        checkpointer=memory
+    )
+
+
 
 def ask_chef_agent(user_input: str, thread_id: str) -> str:
     """Invokes the agent and returns the clean text output."""
